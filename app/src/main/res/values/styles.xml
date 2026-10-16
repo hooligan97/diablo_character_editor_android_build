@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Styl dla naszych pól tekstowych -->
+    <style name="DarkEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/accent_gold</item>
+        <item name="hintTextColor">@color/text_secondary</item>
+        <item name="android:textColorHint">@color/text_secondary</item>
+        <item name="boxBackgroundColor">@color/background_card</item>
+    </style>
+
+    <!-- Styl dla naszych przycisków -->
+    <style name="DiabloButton" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/accent_red</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="cornerRadius">4dp</item>
+        <item name="android:textAllCaps">true</item>
+    </style>
+</resources>
