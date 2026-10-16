@@ -1,0 +1,22 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Główny motyw aplikacji -->
+    <style name="Theme.DiabloEditor" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Kolory główne -->
+        <item name="colorPrimary">@color/accent_red</item>
+        <item name="colorPrimaryVariant">@color/accent_red_light</item>
+        <item name="colorOnPrimary">@color/text_primary</item>
+        
+        <!-- Kolory tła i powierzchni -->
+        <item name="android:windowBackground">@color/background_dark</item>
+        <item name="colorSurface">@color/surface_dark</item>
+        <item name="colorOnSurface">@color/text_primary</item>
+        
+        <!-- Kolor akcentu (np. dla pól tekstowych) -->
+        <item name="colorSecondary">@color/accent_gold</item>
+        <item name="colorSecondaryVariant">@color/accent_gold</item>
+        <item name="colorOnSecondary">@color/background_dark</item>
+
+        <!-- Status bar -->
+        <item name="android:statusBarColor">@color/background_dark</item>
+    </style>
+</resources>
