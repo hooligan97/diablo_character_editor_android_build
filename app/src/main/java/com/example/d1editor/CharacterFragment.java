@@ -1,25 +1,100 @@
 package com.example.d1editor;
 
-import android.graphics.Color;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 public class CharacterFragment extends Fragment {
+    private EditText etName, etLevel, etGold;
+    private Button btnSelectFile, btnSaveFile;
+    private Uri selectedFileUri;
+
+    private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    selectedFileUri = result.getData().getData();
+                    readFile(selectedFileUri);
+                }
+            }
+    );
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TextView textView = new TextView(getContext());
-        textView.setText("Zakładka Postać w przygotowaniu...");
-        textView.setTextColor(Color.parseColor("#E0E0E0"));
-        textView.setGravity(Gravity.CENTER);
-        textView.setBackgroundColor(Color.parseColor("#121212"));
-        return textView;
+        View view = inflater.inflate(R.layout.fragment_character, container, false);
+        etName = view.findViewById(R.id.etCharName);
+        etLevel = view.findViewById(R.id.etCharLevel);
+        etGold = view.findViewById(R.id.etCharGold);
+        btnSelectFile = view.findViewById(R.id.btnSelectFile);
+        btnSaveFile = view.findViewById(R.id.btnSaveFile);
+
+        btnSelectFile.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
+            intent.setType("application/json");
+            filePickerLauncher.launch(intent);
+        });
+
+        btnSaveFile.setOnClickListener(v -> saveFile());
+
+        return view;
+    }
+
+    private void readFile(Uri uri) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(requireContext().getContentResolver().openInputStream(uri)))) {
+            StringBuilder builder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) builder.append(line);
+            DataManager.currentJsonString = builder.toString();
+            JSONObject json = new JSONObject(DataManager.currentJsonString);
+            etName.setText(json.optString("pName", ""));
+            etLevel.setText(json.optString("pLevel", ""));
+            etGold.setText(json.optString("pGold", ""));
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Błąd odczytu pliku", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void saveFile() {
+        if (selectedFileUri == null) {
+            Toast.makeText(getContext(), "Wybierz plik najpierw", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        try {
+            JSONObject json = new JSONObject();
+            if (DataManager.currentJsonString != null && !DataManager.currentJsonString.isEmpty()) {
+                json = new JSONObject(DataManager.currentJsonString);
+            }
+            json.put("pName", etName.getText().toString());
+            json.put("pLevel", etLevel.getText().toString());
+            json.put("pGold", etGold.getText().toString());
+            
+            try (OutputStream os = requireContext().getContentResolver().openOutputStream(selectedFileUri, "wt")) {
+                os.write(json.toString().getBytes());
+            }
+            DataManager.currentJsonString = json.toString();
+            Toast.makeText(getContext(), "Zapisano!", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Błąd zapisu pliku", Toast.LENGTH_SHORT).show();
+        }
     }
 }
