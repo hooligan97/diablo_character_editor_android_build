@@ -1,5 +1,7 @@
 package com.example.d1editor;
 
+// Test automatycznego pushu z Termuxa.
+
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
