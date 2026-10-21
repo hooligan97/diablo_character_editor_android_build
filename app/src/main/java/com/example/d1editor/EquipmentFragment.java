@@ -1,25 +1,79 @@
 package com.example.d1editor;
 
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class EquipmentFragment extends Fragment {
+
+    private EditText etGold, etHelmet, etArmor, etWeapon, etShield;
+    private Button btnSaveEquipment;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TextView textView = new TextView(getContext());
-        textView.setText("Zakładka Ekwipunek w przygotowaniu...");
-        textView.setTextColor(Color.parseColor("#E0E0E0"));
-        textView.setGravity(Gravity.CENTER);
-        textView.setBackgroundColor(Color.parseColor("#121212"));
-        return textView;
+        View view = inflater.inflate(R.layout.fragment_equipment, container, false);
+        etGold = view.findViewById(R.id.etGold);
+        etHelmet = view.findViewById(R.id.etHelmet);
+        etArmor = view.findViewById(R.id.etArmor);
+        etWeapon = view.findViewById(R.id.etWeapon);
+        etShield = view.findViewById(R.id.etShield);
+        btnSaveEquipment = view.findViewById(R.id.btnSaveEquipment);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadData();
+    }
+
+    private void loadData() {
+        try {
+            JSONObject json = new JSONObject(DataManager.currentJsonString);
+            etGold.setText(String.valueOf(json.optInt("pGold")));
+
+            JSONArray invBody = json.optJSONArray("InvBody");
+            if (invBody != null && invBody.length() >= 4) {
+                etHelmet.setText(String.valueOf(invBody.getJSONObject(0).optInt("idx")));
+                etArmor.setText(String.valueOf(invBody.getJSONObject(1).optInt("idx")));
+                etWeapon.setText(String.valueOf(invBody.getJSONObject(2).optInt("idx")));
+                etShield.setText(String.valueOf(invBody.getJSONObject(3).optInt("idx")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        btnSaveEquipment.setOnClickListener(v -> saveData());
+    }
+
+    private void saveData() {
+        try {
+            JSONObject json = new JSONObject(DataManager.currentJsonString);
+            json.put("pGold", Integer.parseInt(etGold.getText().toString()));
+
+            JSONArray invBody = json.optJSONArray("InvBody");
+            if (invBody != null && invBody.length() >= 4) {
+                invBody.getJSONObject(0).put("idx", Integer.parseInt(etHelmet.getText().toString()));
+                invBody.getJSONObject(1).put("idx", Integer.parseInt(etArmor.getText().toString()));
+                invBody.getJSONObject(2).put("idx", Integer.parseInt(etWeapon.getText().toString()));
+                invBody.getJSONObject(3).put("idx", Integer.parseInt(etShield.getText().toString()));
+            }
+
+            DataManager.currentJsonString = json.toString();
+            Toast.makeText(getContext(), "Zapisano ekwipunek", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(getContext(), "Błąd zapisu", Toast.LENGTH_SHORT).show();
+        }
     }
 }
