@@ -1,8 +1,12 @@
 package com.example.d1editor;
 
+import android.app.Activity;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +16,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.util.Locale;
 
 public class ToolsFragment extends Fragment {
@@ -25,10 +34,38 @@ public class ToolsFragment extends Fragment {
     private EditText etHue;
     private EditText etSaturation;
     private EditText etValue;
+    private View colorPreview;
     private TextView tvJsonPreview;
     private Button btnConvert;
     private Button btnCopyCommand;
     private Button btnSaveToJson;
+    private Button btnImportJson;
+    private Button btnExportJson;
+    private Button btnApplyToCharacter;
+
+    private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null) {
+                        loadJsonFromUri(uri);
+                    }
+                }
+            }
+    );
+
+    private final ActivityResultLauncher<Intent> fileCreateLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null) {
+                        exportJsonToUri(uri);
+                    }
+                }
+            }
+    );
 
     @Nullable
     @Override
@@ -39,34 +76,45 @@ public class ToolsFragment extends Fragment {
         etHue = view.findViewById(R.id.etHue);
         etSaturation = view.findViewById(R.id.etSaturation);
         etValue = view.findViewById(R.id.etValue);
+        colorPreview = view.findViewById(R.id.colorPreview);
         tvJsonPreview = view.findViewById(R.id.tvJsonPreview);
         btnConvert = view.findViewById(R.id.btnConvertHsv);
         btnCopyCommand = view.findViewById(R.id.btnCopyCommand);
         btnSaveToJson = view.findViewById(R.id.btnSaveToJson);
+        btnImportJson = view.findViewById(R.id.btnImportJson);
+        btnExportJson = view.findViewById(R.id.btnExportJson);
+        btnApplyToCharacter = view.findViewById(R.id.btnApplyToCharacter);
 
         etHue.setText("210");
         etSaturation.setText("75");
         etValue.setText("90");
 
-        btnConvert.setOnClickListener(v -> convertToJson());
+        btnConvert.setOnClickListener(v -> refreshPreview());
         btnCopyCommand.setOnClickListener(v -> copyShizukuCommand());
         btnSaveToJson.setOnClickListener(v -> saveCurrentJson());
+        btnImportJson.setOnClickListener(v -> openJsonFile());
+        btnExportJson.setOnClickListener(v -> exportJsonFile());
+        btnApplyToCharacter.setOnClickListener(v -> applyToCurrentCharacter());
 
-        convertToJson();
+        refreshPreview();
         return view;
     }
 
-    private void convertToJson() {
+    private void refreshPreview() {
         try {
             float h = parseFloat(etHue, 0f, 360f, 210f);
             float s = parseFloat(etSaturation, 0f, 100f, 75f);
             float v = parseFloat(etValue, 0f, 100f, 90f);
 
-            JSONObject root = createHsvJson(h, s, v);
-            String json = root.toString(2);
+            JSONObject payload = createHsvJson(h, s, v);
+            String json = payload.toString(2);
             tvJsonPreview.setText(json);
+
+            String hex = payload.optJSONObject("rgb").optString("hex", "#000000");
+            colorPreview.setBackgroundColor(Color.parseColor(hex));
         } catch (Exception e) {
             tvJsonPreview.setText("{\n  \"error\": \"Błąd konwersji HSV\"\n}");
+            colorPreview.setBackgroundColor(Color.BLACK);
             Toast.makeText(getContext(), "Błąd konwersji HSV", Toast.LENGTH_SHORT).show();
         }
     }
@@ -79,11 +127,8 @@ public class ToolsFragment extends Fragment {
         }
 
         float value = Float.parseFloat(text);
-        if (value < min) {
-            value = min;
-        } else if (value > max) {
-            value = max;
-        }
+        if (value < min) value = min;
+        if (value > max) value = max;
         field.setText(String.valueOf(value));
         return value;
     }
@@ -95,11 +140,8 @@ public class ToolsFragment extends Fragment {
         float x = c * (1f - Math.abs((h / 60f) % 2f - 1f));
         float m = vNorm - c;
 
-        float r = 0f;
-        float g = 0f;
-        float b = 0f;
-
-        if (h >= 0 && h < 60f) {
+        float r = 0f, g = 0f, b = 0f;
+        if (h >= 0f && h < 60f) {
             r = c; g = x; b = 0f;
         } else if (h < 120f) {
             r = x; g = c; b = 0f;
@@ -134,9 +176,8 @@ public class ToolsFragment extends Fragment {
             payload.put("source", "hsv_to_json");
             payload.put("hsv", hsv);
             payload.put("rgb", rgb);
-            payload.put("notes", "Bez root, bez Shizuku, gotowy do zapisu do pliku JSON.");
+            payload.put("notes", "Gotowy do eksportu i zapisania do postaci JSON.");
             payload.put("shizukuCommand", buildShizukuCommand(payload));
-
             return payload;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -152,7 +193,6 @@ public class ToolsFragment extends Fragment {
             String jsonText = tvJsonPreview.getText().toString();
             JSONObject payload = new JSONObject(jsonText);
             String command = payload.optString("shizukuCommand", "echo '{\"source\":\"hsv_to_json\"}' > /sdcard/diablo_hsv.json");
-
             ClipboardManager clipboard = (ClipboardManager) requireContext().getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("diablo_hsv_command", command);
             clipboard.setPrimaryClip(clip);
@@ -167,9 +207,81 @@ public class ToolsFragment extends Fragment {
             String jsonText = tvJsonPreview.getText().toString();
             JSONObject payload = new JSONObject(jsonText);
             DataManager.currentJsonString = payload.toString();
-            Toast.makeText(getContext(), "JSON zapisany do aktywnego kontekstu aplikacji", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "JSON zapisany do aktywnego kontekstu", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(getContext(), "Błąd zapisu JSON", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openJsonFile() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
+        filePickerLauncher.launch(intent);
+    }
+
+    private void exportJsonFile() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
+        intent.putExtra(Intent.EXTRA_TITLE, "diablo_hsv.json");
+        fileCreateLauncher.launch(intent);
+    }
+
+    private void applyToCurrentCharacter() {
+        try {
+            if (DataManager.selectedCharacterUri == null) {
+                Toast.makeText(getContext(), "Wybierz najpierw plik postaci z zakładki Character", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            JSONObject json = new JSONObject(tvJsonPreview.getText().toString());
+            DataManager.currentJsonString = json.toString();
+            try (OutputStream os = requireContext().getContentResolver().openOutputStream(DataManager.selectedCharacterUri, "wt")) {
+                if (os != null) {
+                    os.write(json.toString().getBytes());
+                }
+            }
+            Toast.makeText(getContext(), "Zapisano JSON do aktywnej postaci", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Błąd zapisu do postaci", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loadJsonFromUri(Uri uri) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(requireContext().getContentResolver().openInputStream(uri)))) {
+            StringBuilder builder = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) builder.append(line);
+
+            JSONObject json = new JSONObject(builder.toString());
+            DataManager.currentJsonString = json.toString();
+
+            if (json.has("hsv")) {
+                JSONObject hsv = json.getJSONObject("hsv");
+                etHue.setText(String.valueOf(hsv.optDouble("h", 210d)));
+                etSaturation.setText(String.valueOf(hsv.optDouble("s", 75d)));
+                etValue.setText(String.valueOf(hsv.optDouble("v", 90d)));
+            }
+
+            refreshPreview();
+            Toast.makeText(getContext(), "Wczytano JSON z pliku", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Błąd wczytywania JSON", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void exportJsonToUri(Uri uri) {
+        try {
+            String content = tvJsonPreview.getText().toString();
+            try (OutputStream os = requireContext().getContentResolver().openOutputStream(uri, "wt")) {
+                if (os != null) {
+                    os.write(content.getBytes());
+                }
+            }
+            Toast.makeText(getContext(), "Eksport JSON wykonany pomyślnie", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Błąd eksportu JSON", Toast.LENGTH_SHORT).show();
         }
     }
 

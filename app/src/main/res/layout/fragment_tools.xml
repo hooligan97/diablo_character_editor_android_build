@@ -20,6 +20,13 @@
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
 
+        <View
+            android:id="@+id/colorPreview"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginBottom="16dp"
+            android:background="#1F5A99" />
+
         <com.google.android.material.textfield.TextInputLayout
             style="@style/DarkEditText"
             android:layout_width="match_parent"
@@ -84,6 +91,30 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Zapisz do aktywnego JSON" />
+
+        <Button
+            android:id="@+id/btnImportJson"
+            style="@style/DiabloSecondaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Importuj JSON z pliku" />
+
+        <Button
+            android:id="@+id/btnExportJson"
+            style="@style/DiabloSecondaryButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Eksportuj JSON do pliku" />
+
+        <Button
+            android:id="@+id/btnApplyToCharacter"
+            style="@style/DiabloButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Zapisz do aktywnej postaci" />
 
         <TextView
             android:id="@+id/tvJsonPreview"

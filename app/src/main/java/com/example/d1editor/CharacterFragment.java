@@ -10,12 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import org.json.JSONException;
+
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -24,7 +25,7 @@ import java.io.OutputStream;
 
 public class CharacterFragment extends Fragment {
     private EditText etName, etLevel, etGold;
-    private Button btnSelectFile, btnSaveFile;
+    private Button btnSelectFile, btnSaveFile, btnExportFile;
     private Uri selectedFileUri;
 
     private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(
@@ -32,7 +33,22 @@ public class CharacterFragment extends Fragment {
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
                     selectedFileUri = result.getData().getData();
+                    DataManager.selectedCharacterUri = selectedFileUri;
                     readFile(selectedFileUri);
+                }
+            }
+    );
+
+    private final ActivityResultLauncher<Intent> fileCreateLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null) {
+                        selectedFileUri = uri;
+                        DataManager.selectedCharacterUri = uri;
+                        saveFileToUri(uri);
+                    }
                 }
             }
     );
@@ -46,17 +62,42 @@ public class CharacterFragment extends Fragment {
         etGold = view.findViewById(R.id.etCharGold);
         btnSelectFile = view.findViewById(R.id.btnSelectFile);
         btnSaveFile = view.findViewById(R.id.btnSaveFile);
+        btnExportFile = view.findViewById(R.id.btnExportFile);
 
-        btnSelectFile.setOnClickListener(v -> {
-            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-            intent.addCategory(Intent.CATEGORY_OPENABLE);
-            intent.setType("application/json");
-            filePickerLauncher.launch(intent);
-        });
-
+        btnSelectFile.setOnClickListener(v -> openCharacterFile());
         btnSaveFile.setOnClickListener(v -> saveFile());
+        btnExportFile.setOnClickListener(v -> exportCharacterFile());
+
+        if (DataManager.selectedCharacterUri != null) {
+            selectedFileUri = DataManager.selectedCharacterUri;
+        }
+
+        if (DataManager.currentJsonString != null && !DataManager.currentJsonString.isEmpty()) {
+            try {
+                JSONObject json = new JSONObject(DataManager.currentJsonString);
+                etName.setText(json.optString("pName", ""));
+                etLevel.setText(json.optString("pLevel", ""));
+                etGold.setText(json.optString("pGold", ""));
+            } catch (Exception ignored) {
+            }
+        }
 
         return view;
+    }
+
+    private void openCharacterFile() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
+        filePickerLauncher.launch(intent);
+    }
+
+    private void exportCharacterFile() {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("application/json");
+        intent.putExtra(Intent.EXTRA_TITLE, "diablo_character.json");
+        fileCreateLauncher.launch(intent);
     }
 
     private void readFile(Uri uri) {
@@ -75,10 +116,21 @@ public class CharacterFragment extends Fragment {
     }
 
     private void saveFile() {
-        if (selectedFileUri == null) {
-            Toast.makeText(getContext(), "Wybierz plik najpierw", Toast.LENGTH_SHORT).show();
+        if (selectedFileUri == null && DataManager.selectedCharacterUri == null) {
+            exportCharacterFile();
             return;
         }
+
+        Uri uri = selectedFileUri != null ? selectedFileUri : DataManager.selectedCharacterUri;
+        if (uri != null) {
+            saveFileToUri(uri);
+            return;
+        }
+
+        Toast.makeText(getContext(), "Wybierz lub utwórz plik postaci", Toast.LENGTH_SHORT).show();
+    }
+
+    private void saveFileToUri(Uri uri) {
         try {
             JSONObject json = new JSONObject();
             if (DataManager.currentJsonString != null && !DataManager.currentJsonString.isEmpty()) {
@@ -87,14 +139,19 @@ public class CharacterFragment extends Fragment {
             json.put("pName", etName.getText().toString());
             json.put("pLevel", etLevel.getText().toString());
             json.put("pGold", etGold.getText().toString());
-            
-            try (OutputStream os = requireContext().getContentResolver().openOutputStream(selectedFileUri, "wt")) {
-                os.write(json.toString().getBytes());
+
+            try (OutputStream os = requireContext().getContentResolver().openOutputStream(uri, "wt")) {
+                if (os != null) {
+                    os.write(json.toString().getBytes());
+                }
             }
+
             DataManager.currentJsonString = json.toString();
-            Toast.makeText(getContext(), "Zapisano!", Toast.LENGTH_SHORT).show();
+            selectedFileUri = uri;
+            DataManager.selectedCharacterUri = uri;
+            Toast.makeText(getContext(), "Zapisano do postaci JSON", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
-            Toast.makeText(getContext(), "Błąd zapisu pliku", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Błąd zapisu pliku postaci", Toast.LENGTH_SHORT).show();
         }
     }
 }
