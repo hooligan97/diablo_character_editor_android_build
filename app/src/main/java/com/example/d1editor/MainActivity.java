@@ -43,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
                 case 3:
                     tab.setText("Character");
                     break;
+                case 4:
+                    tab.setText("Backpack");
+                    break;
             }
         }).attach();
     }
@@ -65,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
                     return new EquipmentFragment();
                 case 3:
                     return new CharacterFragment();
+                case 4:
+                    return new BackpackFragment();
                 default:
                     return new StatsFragment();
             }
@@ -72,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 4; // Liczba zakładek
+            return 5; // Liczba zakładek
         }
     }
 }

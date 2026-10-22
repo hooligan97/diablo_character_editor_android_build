@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 10 EditTexts for items -->
+        <EditText android:id="@+id/etItem0" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 1" />
+        <EditText android:id="@+id/etItem1" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 2" />
+        <EditText android:id="@+id/etItem2" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 3" />
+        <EditText android:id="@+id/etItem3" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 4" />
+        <EditText android:id="@+id/etItem4" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 5" />
+        <EditText android:id="@+id/etItem5" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 6" />
+        <EditText android:id="@+id/etItem6" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 7" />
+        <EditText android:id="@+id/etItem7" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 8" />
+        <EditText android:id="@+id/etItem8" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 9" />
+        <EditText android:id="@+id/etItem9" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 10" />
+
+        <Button
+            android:id="@+id/btnSaveBackpack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zapisz Plecak"
+            android:layout_marginTop="16dp"/>
+
+    </LinearLayout>
+</ScrollView>
