@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 public class SpellsFragment extends Fragment {
 
-    private EditText etFireball, etTeleport, etChainLightning, etFrozenOrb;
+    private EditText[] etSpells = new EditText[10];
     private Button btnSaveSpells;
 
     @Nullable
@@ -24,12 +24,11 @@ public class SpellsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_spells, container, false);
 
-        etFireball = view.findViewById(R.id.etSpellFireball);
-        etTeleport = view.findViewById(R.id.etSpellTeleport);
-        etChainLightning = view.findViewById(R.id.etSpellChainLightning);
-        etFrozenOrb = view.findViewById(R.id.etSpellFrozenOrb);
+        for (int i = 0; i < 10; i++) {
+            int resId = getResources().getIdentifier("etSpell" + i, "id", getContext().getPackageName());
+            etSpells[i] = view.findViewById(resId);
+        }
         btnSaveSpells = view.findViewById(R.id.btnSaveSpells);
-
         btnSaveSpells.setOnClickListener(v -> saveSpells());
 
         return view;
@@ -43,10 +42,11 @@ public class SpellsFragment extends Fragment {
                 JSONObject json = new JSONObject(DataManager.currentJsonString);
                 JSONArray splLvl = json.optJSONArray("pSplLvl");
                 if (splLvl != null) {
-                    if (splLvl.length() > 0) etFireball.setText(String.valueOf(splLvl.optInt(0)));
-                    if (splLvl.length() > 1) etTeleport.setText(String.valueOf(splLvl.optInt(1)));
-                    if (splLvl.length() > 2) etChainLightning.setText(String.valueOf(splLvl.optInt(2)));
-                    if (splLvl.length() > 3) etFrozenOrb.setText(String.valueOf(splLvl.optInt(3)));
+                    for (int i = 0; i < 10; i++) {
+                        if (i < splLvl.length()) {
+                            etSpells[i].setText(String.valueOf(splLvl.optInt(i, 0)));
+                        }
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -61,22 +61,25 @@ public class SpellsFragment extends Fragment {
                 json = new JSONObject(DataManager.currentJsonString);
             }
             JSONArray splLvl = json.optJSONArray("pSplLvl");
-            if (splLvl == null) {
-                splLvl = new JSONArray();
-                for (int i = 0; i < 4; i++) splLvl.put(0);
-                json.put("pSplLvl", splLvl);
+            if (splLvl == null) splLvl = new JSONArray();
+
+            for (int i = 0; i < 10; i++) {
+                String text = etSpells[i].getText().toString();
+                int level = text.isEmpty() ? 0 : Integer.parseInt(text);
+                
+                // Ensure array has enough elements
+                while (splLvl.length() <= i) {
+                    splLvl.put(0);
+                }
+                splLvl.put(i, level);
             }
-            
-            splLvl.put(0, Integer.parseInt(etFireball.getText().toString()));
-            splLvl.put(1, Integer.parseInt(etTeleport.getText().toString()));
-            splLvl.put(2, Integer.parseInt(etChainLightning.getText().toString()));
-            splLvl.put(3, Integer.parseInt(etFrozenOrb.getText().toString()));
+            json.put("pSplLvl", splLvl);
 
             DataManager.currentJsonString = json.toString();
-            Toast.makeText(getContext(), "Poziomy czarów zapisane!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Czary zapisane!", Toast.LENGTH_SHORT).show();
         } catch (JSONException | NumberFormatException e) {
             e.printStackTrace();
-            Toast.makeText(getContext(), "Błąd zapisu poziomów czarów!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Błąd zapisu czarów!", Toast.LENGTH_SHORT).show();
         }
     }
 }
