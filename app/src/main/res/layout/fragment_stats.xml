@@ -72,73 +72,25 @@
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- SEKCJA: RESISTY -->
-        <TextView
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Odporności (Resisty)"
-            android:textSize="20sp"
-            android:textColor="@color/text_accent"
-            android:textStyle="bold"
+            android:layout_marginTop="12dp"
+            android:hint="Doświadczenie (Experience)">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etExperience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSaveStats"
+            style="@style/DiabloButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:layout_marginBottom="16dp" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/DarkEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Odporność na Ogień (%)">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etResFire"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/DarkEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Odporność na Zimno (%)">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etResCold"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/DarkEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Odporność na Błyskawice (%)">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etResLightning"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/DarkEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Odporność na Truciznę (%)">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etResPoison"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
-<Button
-    android:id="@+id/btnSaveStats"
-    style="@style/DiabloButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:text="Zapisz Statystyki" />
+            android:text="Zapisz Statystyki" />
     </LinearLayout>
 </ScrollView>

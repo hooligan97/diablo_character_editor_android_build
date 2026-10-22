@@ -15,8 +15,7 @@ import org.json.JSONObject;
 
 public class StatsFragment extends Fragment {
 
-    private EditText etStr, etDex, etVit, etEne;
-    private EditText etResFire, etResCold, etResLight, etResPoison;
+    private EditText etStr, etDex, etVit, etEne, etExperience;
     private Button btnSaveStats;
 
     @Nullable
@@ -28,10 +27,7 @@ public class StatsFragment extends Fragment {
         etDex = view.findViewById(R.id.etDexterity);
         etVit = view.findViewById(R.id.etVitality);
         etEne = view.findViewById(R.id.etEnergy);
-        etResFire = view.findViewById(R.id.etResFire);
-        etResCold = view.findViewById(R.id.etResCold);
-        etResLight = view.findViewById(R.id.etResLightning);
-        etResPoison = view.findViewById(R.id.etResPoison);
+        etExperience = view.findViewById(R.id.etExperience);
         btnSaveStats = view.findViewById(R.id.btnSaveStats);
 
         btnSaveStats.setOnClickListener(v -> saveStats());
@@ -49,6 +45,7 @@ public class StatsFragment extends Fragment {
                 etDex.setText(json.optString("pBaseDex", ""));
                 etVit.setText(json.optString("pBaseVit", ""));
                 etEne.setText(json.optString("pBaseMag", ""));
+                etExperience.setText(json.optString("pExperience", ""));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -65,6 +62,7 @@ public class StatsFragment extends Fragment {
             json.put("pBaseDex", Integer.parseInt(etDex.getText().toString()));
             json.put("pBaseVit", Integer.parseInt(etVit.getText().toString()));
             json.put("pBaseMag", Integer.parseInt(etEne.getText().toString()));
+            json.put("pExperience", Integer.parseInt(etExperience.getText().toString()));
 
             DataManager.currentJsonString = json.toString();
             Toast.makeText(getContext(), "Statystyki zapisane!", Toast.LENGTH_SHORT).show();
