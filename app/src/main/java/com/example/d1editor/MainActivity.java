@@ -1,21 +1,15 @@
 package com.example.d1editor;
 
-// Test automatycznego pushu z Termuxa.
-
 import android.os.Bundle;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends androidx.appcompat.app.AppCompatActivity {
 
-    private ViewPager2 viewPager;
-    private TabLayout tabLayout;
+    private androidx.viewpager2.widget.ViewPager2 viewPager;
+    private com.google.android.material.tabs.TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,12 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
-
-        // Ustawiamy adapter dla ViewPager2
         viewPager.setAdapter(new MyPagerAdapter(this));
 
-        // Łączymy TabLayout z ViewPager2
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
+        new com.google.android.material.tabs.TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position) {
                 case 0:
                     tab.setText("Stats");
@@ -46,13 +37,18 @@ public class MainActivity extends AppCompatActivity {
                 case 4:
                     tab.setText("Backpack");
                     break;
+                case 5:
+                    tab.setText("Tools");
+                    break;
+                default:
+                    tab.setText("Stats");
+                    break;
             }
         }).attach();
     }
 
-    // Adapter, który zarządza fragmentami dla każdej zakładki
     private static class MyPagerAdapter extends FragmentStateAdapter {
-        public MyPagerAdapter(@NonNull FragmentActivity fragmentActivity) {
+        public MyPagerAdapter(@NonNull androidx.fragment.app.FragmentActivity fragmentActivity) {
             super(fragmentActivity);
         }
 
@@ -70,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
                     return new CharacterFragment();
                 case 4:
                     return new BackpackFragment();
+                case 5:
+                    return new ToolsFragment();
                 default:
                     return new StatsFragment();
             }
@@ -77,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
-            return 5; // Liczba zakładek
+            return 6;
         }
     }
 }
