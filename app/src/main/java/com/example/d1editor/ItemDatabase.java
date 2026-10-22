@@ -22,4 +22,14 @@ public class ItemDatabase {
     public static String getItemName(int idx) {
         return items.getOrDefault(idx, "Nieznany przedmiot (" + idx + ")");
     }
+
+    public static int getItemId(String name) {
+        if (name == null || name.isEmpty()) return 65535;
+        for (Map.Entry<Integer, String> entry : items.entrySet()) {
+            if (entry.getValue().equalsIgnoreCase(name)) {
+                return entry.getKey();
+            }
+        }
+        return 65535;
+    }
 }
