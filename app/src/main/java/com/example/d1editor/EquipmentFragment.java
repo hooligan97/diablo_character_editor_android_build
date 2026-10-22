@@ -46,11 +46,13 @@ public class EquipmentFragment extends Fragment {
             etGold.setText(String.valueOf(json.optInt("pGold")));
 
             JSONArray invBody = json.optJSONArray("InvBody");
-            if (invBody != null && invBody.length() >= 4) {
-                etHelmet.setText(ItemDatabase.getItemName(invBody.getJSONObject(0).optInt("idx")));
-                etArmor.setText(ItemDatabase.getItemName(invBody.getJSONObject(1).optInt("idx")));
-                etWeapon.setText(ItemDatabase.getItemName(invBody.getJSONObject(2).optInt("idx")));
-                etShield.setText(ItemDatabase.getItemName(invBody.getJSONObject(3).optInt("idx")));
+            if (invBody != null) {
+                // Diablo 1 InvBody mapping:
+                // Index 0: Helmet, 1: Armor, 2: Weapon, 3: Shield
+                if (invBody.length() > 0) etHelmet.setText(ItemDatabase.getItemName(invBody.getJSONObject(0).optInt("idx")));
+                if (invBody.length() > 1) etArmor.setText(ItemDatabase.getItemName(invBody.getJSONObject(1).optInt("idx")));
+                if (invBody.length() > 2) etWeapon.setText(ItemDatabase.getItemName(invBody.getJSONObject(2).optInt("idx")));
+                if (invBody.length() > 3) etShield.setText(ItemDatabase.getItemName(invBody.getJSONObject(3).optInt("idx")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -62,11 +64,24 @@ public class EquipmentFragment extends Fragment {
             JSONObject json = new JSONObject(DataManager.currentJsonString);
             json.put("pGold", Integer.parseInt(etGold.getText().toString()));
 
-            // Equipment fields are now read-only, so we only save gold.
-            // If they need to be editable later, we'd need to map names back to IDs.
+            JSONArray invBody = json.optJSONArray("InvBody");
+            if (invBody == null) invBody = new JSONArray();
 
+            // Ensure we have at least 4 items
+            while (invBody.length() < 4) {
+                invBody.put(new JSONObject().put("idx", 65535));
+            }
+
+            // Update items if they exist and are valid (based on text input)
+            invBody.getJSONObject(0).put("idx", ItemDatabase.getItemId(etHelmet.getText().toString()));
+            invBody.getJSONObject(1).put("idx", ItemDatabase.getItemId(etArmor.getText().toString()));
+            invBody.getJSONObject(2).put("idx", ItemDatabase.getItemId(etWeapon.getText().toString()));
+            invBody.getJSONObject(3).put("idx", ItemDatabase.getItemId(etShield.getText().toString()));
+
+            json.put("InvBody", invBody);
+            
             DataManager.currentJsonString = json.toString();
-            Toast.makeText(getContext(), "Zapisano złoto", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Zapisano wyposażenie i złoto", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Błąd zapisu", Toast.LENGTH_SHORT).show();

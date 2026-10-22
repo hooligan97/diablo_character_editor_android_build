@@ -17,6 +17,13 @@ public class ItemDatabase {
         items.put(6, "Pierścień");
         items.put(7, "Amulet");
         items.put(8, "Mikstura");
+        // Added items
+        items.put(30, "Mikstura Lecznicza");
+        items.put(31, "Mikstura Many");
+        items.put(101, "Zwój Town Portal");
+        items.put(103, "Zwój Identify");
+        items.put(152, "Miecz Krótki");
+        items.put(65535, "Puste");
     }
 
     public static String getItemName(int idx) {
