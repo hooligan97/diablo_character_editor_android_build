@@ -7,7 +7,7 @@ public class ItemDatabase {
     private static final Map<Integer, String> items = new HashMap<>();
 
     static {
-        items.put(68, "Miecz");
+        items.put(68, "Hełm");
         items.put(2170, "Zbroja Skórzana");
         items.put(1, "Hełm");
         items.put(2, "Tarcza");
@@ -18,8 +18,12 @@ public class ItemDatabase {
         items.put(7, "Amulet");
         items.put(8, "Mikstura");
         // Added items
+        items.put(21, "Mikstura Many");
+        items.put(22, "Mikstura Lecznicza");
         items.put(30, "Mikstura Lecznicza");
         items.put(31, "Mikstura Many");
+        items.put(34, "Zwój Teleportacji");
+        items.put(35, "Zwój Identyfikacji");
         items.put(101, "Zwój Town Portal");
         items.put(103, "Zwój Identify");
         items.put(152, "Miecz Krótki");
