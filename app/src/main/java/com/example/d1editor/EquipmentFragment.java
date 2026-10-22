@@ -28,6 +28,9 @@ public class EquipmentFragment extends Fragment {
         etWeapon = view.findViewById(R.id.etWeapon);
         etShield = view.findViewById(R.id.etShield);
         btnSaveEquipment = view.findViewById(R.id.btnSaveEquipment);
+        
+        btnSaveEquipment.setOnClickListener(v -> saveData());
+        
         return view;
     }
 
@@ -44,16 +47,14 @@ public class EquipmentFragment extends Fragment {
 
             JSONArray invBody = json.optJSONArray("InvBody");
             if (invBody != null && invBody.length() >= 4) {
-                etHelmet.setText(String.valueOf(invBody.getJSONObject(0).optInt("idx")));
-                etArmor.setText(String.valueOf(invBody.getJSONObject(1).optInt("idx")));
-                etWeapon.setText(String.valueOf(invBody.getJSONObject(2).optInt("idx")));
-                etShield.setText(String.valueOf(invBody.getJSONObject(3).optInt("idx")));
+                etHelmet.setText(ItemDatabase.getItemName(invBody.getJSONObject(0).optInt("idx")));
+                etArmor.setText(ItemDatabase.getItemName(invBody.getJSONObject(1).optInt("idx")));
+                etWeapon.setText(ItemDatabase.getItemName(invBody.getJSONObject(2).optInt("idx")));
+                etShield.setText(ItemDatabase.getItemName(invBody.getJSONObject(3).optInt("idx")));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        btnSaveEquipment.setOnClickListener(v -> saveData());
     }
 
     private void saveData() {
@@ -61,16 +62,11 @@ public class EquipmentFragment extends Fragment {
             JSONObject json = new JSONObject(DataManager.currentJsonString);
             json.put("pGold", Integer.parseInt(etGold.getText().toString()));
 
-            JSONArray invBody = json.optJSONArray("InvBody");
-            if (invBody != null && invBody.length() >= 4) {
-                invBody.getJSONObject(0).put("idx", Integer.parseInt(etHelmet.getText().toString()));
-                invBody.getJSONObject(1).put("idx", Integer.parseInt(etArmor.getText().toString()));
-                invBody.getJSONObject(2).put("idx", Integer.parseInt(etWeapon.getText().toString()));
-                invBody.getJSONObject(3).put("idx", Integer.parseInt(etShield.getText().toString()));
-            }
+            // Equipment fields are now read-only, so we only save gold.
+            // If they need to be editable later, we'd need to map names back to IDs.
 
             DataManager.currentJsonString = json.toString();
-            Toast.makeText(getContext(), "Zapisano ekwipunek", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Zapisano złoto", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(getContext(), "Błąd zapisu", Toast.LENGTH_SHORT).show();

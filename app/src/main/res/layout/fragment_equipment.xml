@@ -25,12 +25,13 @@
         style="@style/DarkEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Hełm (ID)">
+        android:hint="Hełm">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etHelmet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="text"
+            android:enabled="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -38,12 +39,13 @@
         style="@style/DarkEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Zbroja (ID)">
+        android:hint="Zbroja">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etArmor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="text"
+            android:enabled="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -51,12 +53,13 @@
         style="@style/DarkEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Broń (ID)">
+        android:hint="Broń">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etWeapon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="text"
+            android:enabled="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -64,12 +67,13 @@
         style="@style/DarkEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tarcza (ID)">
+        android:hint="Tarcza">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etShield"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
+            android:inputType="text"
+            android:enabled="false" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
