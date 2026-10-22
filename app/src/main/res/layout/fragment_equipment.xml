@@ -1,87 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#121212">
+    android:background="@color/background_dark"
+    android:fillViewport="true">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilGold"
-        style="@style/DarkEditText"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Złoto">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etGold"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilGold"
+            style="@style/DarkEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="number" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:hint="Złoto">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etGold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilHelmet"
-        style="@style/DarkEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Hełm">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etHelmet"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilHelmet"
+            style="@style/DarkEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:enabled="false" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="12dp"
+            android:hint="Hełm">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etHelmet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:enabled="false"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilArmor"
-        style="@style/DarkEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Zbroja">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etArmor"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilArmor"
+            style="@style/DarkEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:enabled="false" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="12dp"
+            android:hint="Zbroja">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etArmor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:enabled="false"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilWeapon"
-        style="@style/DarkEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Broń">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etWeapon"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilWeapon"
+            style="@style/DarkEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:enabled="false" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="12dp"
+            android:hint="Broń">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etWeapon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:enabled="false"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/tilShield"
-        style="@style/DarkEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tarcza">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etShield"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilShield"
+            style="@style/DarkEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:enabled="false" />
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_marginTop="12dp"
+            android:hint="Tarcza">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etShield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:enabled="false"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
-        android:id="@+id/btnSaveEquipment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Zapisz Ekwipunek"
-        style="@style/DiabloButton" />
+        <Button
+            android:id="@+id/btnSaveEquipment"
+            style="@style/DiabloButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Zapisz ekwipunek" />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

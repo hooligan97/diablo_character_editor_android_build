@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Tła -->
-    <color name="background_dark">#121212</color>
-    <color name="surface_dark">#1E1E1E</color>
-    <color name="background_card">#2A2A2A</color>
+    <!-- Core palette -->
+    <color name="background_dark">#111827</color>
+    <color name="surface_dark">#1B2333</color>
+    <color name="background_card">#232D3D</color>
+    <color name="background_card_alt">#2A3446</color>
 
-    <!-- Teksty -->
-    <color name="text_primary">#E0E0E0</color>
-    <color name="text_secondary">#A0A0A0</color>
-    <color name="text_accent">#FFD700</color> <!-- Złoty -->
+    <!-- Text -->
+    <color name="text_primary">#F3F4F6</color>
+    <color name="text_secondary">#A7B2C2</color>
+    <color name="text_accent">#F4C96D</color>
 
-    <!-- Akcenty Diablo -->
-    <color name="accent_red">#8B0000</color> <!-- Ciemna czerwień -->
-    <color name="accent_red_light">#B22222</color>
-    <color name="accent_gold">#C5A059</color>
+    <!-- Diablo-inspired accents -->
+    <color name="accent_red">#8B1E1E</color>
+    <color name="accent_red_light">#B33A3A</color>
+    <color name="accent_gold">#D9B15D</color>
+    <color name="accent_gold_soft">#E8D7A6</color>
+    <color name="accent_green">#4CAF50</color>
 </resources>

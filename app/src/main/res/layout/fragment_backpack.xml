@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/background_dark"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,24 +11,160 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- 10 EditTexts for items -->
-        <EditText android:id="@+id/etItem0" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 1" />
-        <EditText android:id="@+id/etItem1" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 2" />
-        <EditText android:id="@+id/etItem2" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 3" />
-        <EditText android:id="@+id/etItem3" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 4" />
-        <EditText android:id="@+id/etItem4" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 5" />
-        <EditText android:id="@+id/etItem5" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 6" />
-        <EditText android:id="@+id/etItem6" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 7" />
-        <EditText android:id="@+id/etItem7" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 8" />
-        <EditText android:id="@+id/etItem8" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 9" />
-        <EditText android:id="@+id/etItem9" style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Przedmiot 10" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Plecak"
+            android:textSize="20sp"
+            android:textColor="@color/text_accent"
+            android:textStyle="bold"
+            android:layout_marginBottom="12dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Przedmiot 1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 2">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 3">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 4">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 5">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 6">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 7">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 8">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 9">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Przedmiot 10">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etItem9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSaveBackpack"
+            style="@style/DiabloButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zapisz Plecak"
-            android:layout_marginTop="16dp"/>
-
+            android:layout_marginTop="24dp"
+            android:text="Zapisz plecak" />
     </LinearLayout>
 </ScrollView>

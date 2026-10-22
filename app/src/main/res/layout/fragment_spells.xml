@@ -1,37 +1,164 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_dark"
-    android:padding="16dp">
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/spellsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Poziomy Czarów"
+            android:text="Poziomy czarów"
             android:textSize="20sp"
             android:textColor="@color/text_accent"
             android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="12dp" />
 
-        <!-- Dynamic generation or explicit fields -->
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 0"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell0" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 1"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell1" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 2"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell2" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 3"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell3" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 4"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell4" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 5"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell5" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 6"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell6" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 7"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell7" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 8"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell8" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout style="@style/DarkEditText" android:layout_width="match_parent" android:layout_height="wrap_content" android:hint="Spell 9"><com.google.android.material.textfield.TextInputEditText android:id="@+id/etSpell9" android:layout_width="match_parent" android:layout_height="wrap_content" android:inputType="number" /></com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Czar 1">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 2">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 3">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 4">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 5">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 6">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 7">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 8">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 9">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/DarkEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:hint="Czar 10">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSpell9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textColor="@color/text_primary" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btnSaveSpells"
@@ -39,6 +166,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Zapisz Czary" />
+            android:text="Zapisz czary" />
     </LinearLayout>
 </ScrollView>

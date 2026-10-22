@@ -8,35 +8,57 @@
 
     <Button
         android:id="@+id/btnSelectFile"
+        style="@style/DiabloButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Wczytaj plik .json"
         android:layout_marginBottom="16dp" />
 
-    <EditText
-        android:id="@+id/etCharName"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/DarkEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Imię postaci" />
+        android:hint="Imię postaci">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCharName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etCharLevel"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/DarkEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Poziom"
-        android:inputType="number" />
+        android:layout_marginTop="12dp"
+        android:hint="Poziom">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCharLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etCharGold"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/DarkEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Złoto"
-        android:inputType="number" />
+        android:layout_marginTop="12dp"
+        android:hint="Złoto">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etCharGold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="@color/text_primary" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Button
         android:id="@+id/btnSaveFile"
+        style="@style/DiabloButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Zapisz zmiany do pliku"
-        android:layout_marginTop="16dp" />
+        android:layout_marginTop="20dp" />
 </LinearLayout>

@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Styl dla naszych pól tekstowych -->
     <style name="DarkEditText" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/accent_gold</item>
+        <item name="boxBackgroundColor">@color/background_card</item>
+        <item name="boxStrokeErrorColor">@color/accent_red</item>
         <item name="hintTextColor">@color/text_secondary</item>
         <item name="android:textColorHint">@color/text_secondary</item>
-        <item name="boxBackgroundColor">@color/background_card</item>
+        <item name="endIconTint">@color/accent_gold</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
     </style>
 
-    <!-- Styl dla naszych przycisków -->
     <style name="DiabloButton" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/accent_red</item>
         <item name="android:textColor">@color/text_primary</item>
-        <item name="cornerRadius">4dp</item>
         <item name="android:textAllCaps">true</item>
+        <item name="cornerRadius">12dp</item>
+        <item name="android:letterSpacing">0.04</item>
+    </style>
+
+    <style name="DiabloSecondaryButton" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/accent_gold</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="cornerRadius">12dp</item>
     </style>
 </resources>
