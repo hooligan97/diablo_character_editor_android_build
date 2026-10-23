@@ -61,4 +61,12 @@
         android:layout_height="wrap_content"
         android:text="Zapisz zmiany do pliku"
         android:layout_marginTop="20dp" />
+
+    <Button
+        android:id="@+id/btnExportFile"
+        style="@style/DiabloSecondaryButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Eksportuj do nowego pliku"
+        android:layout_marginTop="12dp" />
 </LinearLayout>
